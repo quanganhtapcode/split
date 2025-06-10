@@ -1,0 +1,31 @@
+{
+  "name": "bill-splitter",
+  "version": "2.0.0",
+  "description": "Modern bill splitting app for Vietnamese users",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server .",
+    "build": "echo 'No build step needed for vanilla HTML/CSS/JS'",
+    "deploy": "echo 'Deploy to GitHub Pages: Enable Pages in repository settings'"
+  },
+  "keywords": [
+    "bill-splitter",
+    "vietnamese",
+    "restaurant",
+    "payment",
+    "qr-code",
+    "vietqr"
+  ],
+  "author": "quanganhdeptrai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/bill-splitter.git"
+  },
+  "homepage": "https://yourusername.github.io/bill-splitter",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  }
+}

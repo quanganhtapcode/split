@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia Tiền - Bill Splitter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Ứng dụng chia tiền thông minh, tính toán chính xác chi phí chung cho từng người">
+</head>
+<body>
+    <div class="app">
+        <header class="header">            <h1 class="header__title">
+                <span class="header__icon">💰</span>
+                Chia Tiền
+            </h1>
+            <p class="header__subtitle">Tính toán chi phí chung cho từng người một cách chính xác</p>
+        </header>
+
+        <main class="main">
+            <div class="container">                <!-- People Input Section -->
+                <section class="section">
+                    <div class="section__header">
+                        <h2 class="section__title">👥 Danh sách người tham gia</h2>
+                        <button id="clearAllBtn" class="btn btn--secondary btn--sm btn--icon" title="Xóa tất cả dữ liệu">
+                            <span class="btn__icon">🗑️</span>
+                            Xóa tất cả
+                        </button>
+                    </div>
+                    <p class="section__description">Nhập tên từng người, mỗi người một dòng</p>
+                    <div class="form-group">
+                        <textarea 
+                            id="peopleNames" 
+                            class="textarea" 
+                            rows="4" 
+                        ></textarea>
+                        <div class="people-count">
+                            <span id="peopleCount">0</span> người
+                        </div>
+                    </div>
+                </section>                <!-- Items Section -->
+                <section class="section">
+                    <div class="section__header">
+                        <h2 class="section__title">📝 Chi phí</h2>
+                        <button id="addItemBtn" class="btn btn--primary btn--sm btn--icon">
+                            <span class="btn__icon">+</span>
+                            Thêm khoản
+                        </button>
+                    </div>
+                    
+                    <div class="items-container">
+                        <div id="itemsList" class="items-list"></div>
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-state__icon">💸</div>
+                            <p class="empty-state__text">Chưa có khoản chi nào. Hãy thêm khoản đầu tiên!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section class="section section--results">
+                    <div class="section__header">
+                        <h2 class="section__title">💰 Kết quả tính toán</h2>
+                    </div>
+                    
+                    <div class="results">
+                        <div class="total-amount">
+                            <span class="total-amount__label">Tổng tiền:</span>
+                            <span id="totalAmount" class="total-amount__value">0₫</span>
+                        </div>
+                        
+                        <div id="resultsList" class="results-list"></div>                          <div class="empty-results" id="emptyResults">
+                            <p>Kết quả sẽ hiển thị khi bạn thêm người và chi phí</p>
+                            <p class="helper-text">💡 Người "Sẽ nhận" sẽ có nút tạo QR để nhận tiền từ những người "Cần trả"</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment QR Section -->
+                <section class="section section--payment" id="paymentSection" style="display: none;">                    <div class="section__header">
+                        <h2 class="section__title">📱 Thanh toán QR</h2>
+                        <div class="section__actions">
+                            <button id="clearQRBtn" class="btn btn--secondary btn--sm" style="display: none;">
+                                Xóa QR
+                            </button>
+                            <button id="togglePaymentBtn" class="btn btn--secondary btn--sm">
+                                Thiết lập thanh toán
+                            </button>
+                        </div>
+                    </div>
+                      <div id="paymentForm" class="payment-form" style="display: none;">
+                        <p class="section__description">Nhập thông tin tài khoản của người sẽ nhận tiền (người đã trả trước)</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bankSelect" class="label">Ngân hàng</label>
+                                <select id="bankSelect" class="select">
+                                    <option value="">Chọn ngân hàng</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="accountNo" class="label">Số tài khoản</label>
+                                <input type="text" id="accountNo" class="input" placeholder="Nhập số tài khoản">
+                            </div>
+                            <div class="form-group">
+                                <label for="accountName" class="label">Tên tài khoản</label>
+                                <input type="text" id="accountName" class="input" placeholder="VD: NGUYEN VAN A">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="qrContainer" class="qr-container" style="display: none;">
+                        <div class="qr-code">
+                            <img id="qrImage" class="qr-code__image" alt="QR Code">
+                            <div id="qrLoading" class="qr-loading">
+                                <div class="spinner"></div>
+                                <p>Đang tạo mã QR...</p>
+                            </div>
+                        </div>
+                        <div class="qr-info">
+                            <p class="qr-info__amount" id="qrAmount"></p>
+                            <p class="qr-info__description">Quét mã để thanh toán</p>
+                        </div>
+                        <div class="qr-actions">
+                            <button id="downloadQR" class="btn btn--secondary btn--sm">Tải về</button>
+                            <button id="shareQR" class="btn btn--secondary btn--sm">Chia sẻ</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__text">
+                Created with ❤️ by <strong>quanganhdeptrai</strong>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Item Template -->
+    <template id="itemTemplate">
+        <div class="item-card">            <div class="item-card__header">
+                <input type="text" class="item-name input input--borderless" placeholder="Tên khoản chi (VD: Taxi, Đồ uống, Karaoke...)">
+                <button class="item-card__delete btn btn--danger btn--sm btn--icon" aria-label="Xóa khoản">
+                    ×
+                </button>
+            </div>
+            
+            <div class="item-card__content">                <div class="form-group">
+                    <label class="label">Giá tiền (nghìn VNĐ)</label>
+                    <input type="number" class="item-price input" placeholder="50 = 50.000đ" min="0" step="1">
+                </div>
+                
+                <div class="form-group">
+                    <label class="label">Người dùng</label>
+                    <div class="people-selector" data-type="eaters"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="label">Người trả</label>
+                    <div class="people-selector" data-type="payers"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Result Item Template -->
+    <template id="resultTemplate">
+        <div class="result-item">
+            <div class="result-item__info">
+                <h3 class="result-item__name"></h3>
+                <p class="result-item__details"></p>
+            </div>
+            <div class="result-item__amount"></div>            <button class="result-item__qr btn btn--outline btn--sm" style="display: none;">
+                Tạo QR
+            </button>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
