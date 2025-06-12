@@ -13,7 +13,7 @@ Một ứng dụng web hiện đại để chia tiền ăn thông minh, tính to
 
 ## 🚀 Demo
 
-Xem demo trực tiếp tại: [https://yourusername.github.io/bill-splitter](https://yourusername.github.io/bill-splitter)
+Xem demo trực tiếp tại: [https://quanganhtapcode.github.io/split](https://quanganhtapcode.github.io/split)
 
 ## 📱 Screenshot
 
