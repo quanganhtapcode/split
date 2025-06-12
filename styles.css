@@ -813,11 +813,12 @@ body {
 /* iPhone 14 Pro and similar sizes (430px width) */
 @media (max-width: 430px) {
   .main {
-    padding: var(--spacing-md) var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-sm); /* Changed from xs to sm for more side space */
   }
   
   .container {
     max-width: 100%;
+    padding: 0 var(--spacing-sm); /* Added horizontal padding to container */
   }
   
   .section {
@@ -936,6 +937,14 @@ body {
 }
 
 @media (max-width: 480px) {
+  .main {
+    padding: var(--spacing-md) var(--spacing-md); /* Increased side padding */
+  }
+  
+  .container {
+    padding: 0 var(--spacing-sm); /* Added consistent horizontal padding */
+  }
+  
   .section {
     padding: var(--spacing-sm);
   }
@@ -960,6 +969,17 @@ body {
   .result-item__qr {
     width: 100%;
     max-width: 120px;
+  }
+}
+
+/* Additional mobile tweaks for better spacing */
+@media (max-width: 375px) {
+  .main {
+    padding: var(--spacing-md) var(--spacing-lg); /* Even more side padding for smaller phones */
+  }
+  
+  .container {
+    padding: 0 var(--spacing-md);
   }
 }
 
